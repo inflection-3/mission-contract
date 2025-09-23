@@ -9,11 +9,11 @@ import "./interfaces/IUSDC.sol";
 import "./interfaces/IMission.sol";
 
 /**
- * @title MissionContract
- * @dev Main contract that demonstrates the usage of the Mission Factory system
+ * @title MissionManager
+ * @dev Main contract that manages the Mission Factory system
  * This contract acts as a central hub for managing missions and their lifecycle
  */
-contract MissionContract is Ownable {
+contract MissionManager is Ownable {
     MissionFactory public immutable missionFactory;
     IUSDC public immutable usdcToken;
     

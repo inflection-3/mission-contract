@@ -60,16 +60,16 @@ echo "✅ MissionFactory deployed at: $FACTORY_ADDRESS"
 echo "🔗 View on explorer: $EXPLORER_URL/address/$FACTORY_ADDRESS"
 
 echo ""
-echo "📦 Deploying MissionContract..."
-MISSION_CONTRACT_ADDRESS=$(forge create \
+echo "📦 Deploying MissionManager..."
+MISSION_MANAGER_ADDRESS=$(forge create \
     --rpc-url $RPC_URL \
     --private-key $PRIVATE_KEY \
     --json \
-    src/MissionContract.sol:MissionContract \
+    src/MissionManager.sol:MissionManager \
     --constructor-args $USDC_ADDRESS $FACTORY_ADDRESS | jq -r '.deployedTo')
 
-echo "✅ MissionContract deployed at: $MISSION_CONTRACT_ADDRESS"
-echo "🔗 View on explorer: $EXPLORER_URL/address/$MISSION_CONTRACT_ADDRESS"
+echo "✅ MissionManager deployed at: $MISSION_MANAGER_ADDRESS"
+echo "🔗 View on explorer: $EXPLORER_URL/address/$MISSION_MANAGER_ADDRESS"
 
 # Save deployment info
 DEPLOYMENT_FILE="deployments/base-$NETWORK.json"
@@ -86,9 +86,9 @@ cat > $DEPLOYMENT_FILE << EOF
       "address": "$FACTORY_ADDRESS",
       "explorerUrl": "$EXPLORER_URL/address/$FACTORY_ADDRESS"
     },
-    "MissionContract": {
-      "address": "$MISSION_CONTRACT_ADDRESS",
-      "explorerUrl": "$EXPLORER_URL/address/$MISSION_CONTRACT_ADDRESS"
+    "MissionManager": {
+      "address": "$MISSION_MANAGER_ADDRESS",
+      "explorerUrl": "$EXPLORER_URL/address/$MISSION_MANAGER_ADDRESS"
     }
   },
   "deployedAt": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"

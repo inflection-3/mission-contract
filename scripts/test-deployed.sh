@@ -22,14 +22,14 @@ fi
 
 # Extract addresses from deployment file
 FACTORY_ADDRESS=$(jq -r '.deployments.MissionFactory.address' $DEPLOYMENT_FILE)
-MISSION_CONTRACT_ADDRESS=$(jq -r '.deployments.MissionContract.address' $DEPLOYMENT_FILE)
+MISSION_MANAGER_ADDRESS=$(jq -r '.deployments.MissionManager.address' $DEPLOYMENT_FILE)
 USDC_ADDRESS=$(jq -r '.usdcAddress' $DEPLOYMENT_FILE)
 RPC_URL=$(jq -r '.rpcUrl' $DEPLOYMENT_FILE)
 
 echo "🧪 Testing deployed contracts on Base $NETWORK..."
 echo "📡 RPC URL: $RPC_URL"
 echo "🏭 MissionFactory: $FACTORY_ADDRESS"
-echo "📋 MissionContract: $MISSION_CONTRACT_ADDRESS"
+echo "📋 MissionManager: $MISSION_MANAGER_ADDRESS"
 echo "💰 USDC: $USDC_ADDRESS"
 echo ""
 
@@ -45,7 +45,7 @@ const MISSION_FACTORY_ABI = [
     "function getAllMissions() external view returns (address[] memory)"
 ];
 
-const MISSION_CONTRACT_ABI = [
+const MISSION_MANAGER_ABI = [
     "function createMission(string memory name, string memory description) external returns (uint256 missionId, address missionAddress)",
     "function getTotalMissions() external view returns (uint256)",
     "function getMissionInfo(uint256) external view returns (tuple(uint256 missionId, address missionAddress, string name, string description, bool isActive, uint256 totalParticipants, uint256 totalRewards))",
@@ -81,7 +81,7 @@ async function testDeployedContracts() {
     
     // Connect to contracts
     const factory = new ethers.Contract('$FACTORY_ADDRESS', MISSION_FACTORY_ABI, wallet);
-    const missionContract = new ethers.Contract('$MISSION_CONTRACT_ADDRESS', MISSION_CONTRACT_ABI, wallet);
+    const missionManager = new ethers.Contract('$MISSION_MANAGER_ADDRESS', MISSION_MANAGER_ABI, wallet);
     
     console.log('\\n🏭 Testing MissionFactory...');
     
@@ -100,15 +100,15 @@ async function testDeployedContracts() {
     const missionAddress = await factory.getMission(newMissionCount);
     console.log('🎯 Created mission at:', missionAddress);
     
-    console.log('\\n📋 Testing MissionContract...');
+    console.log('\\n📋 Testing MissionManager...');
     
     // Test mission contract functions
-    const totalMissions = await missionContract.getTotalMissions();
+    const totalMissions = await missionManager.getTotalMissions();
     console.log('📊 Total missions in contract:', totalMissions.toString());
     
     // Create a mission through mission contract
-    console.log('📦 Creating mission through MissionContract...');
-    const tx2 = await missionContract.createMission("Test Mission", "A test mission for Base deployment");
+    console.log('📦 Creating mission through MissionManager...');
+    const tx2 = await missionManager.createMission("Test Mission", "A test mission for Base deployment");
     await tx2.wait();
     
     const missionId = tx2.returnValues.missionId;
@@ -117,7 +117,7 @@ async function testDeployedContracts() {
     console.log('🎯 Created mission address:', missionAddress2);
     
     // Get mission info
-    const missionInfo = await missionContract.getMissionInfo(missionId);
+    const missionInfo = await missionManager.getMissionInfo(missionId);
     console.log('📋 Mission info:', {
         id: missionInfo.missionId.toString(),
         address: missionInfo.missionAddress,
@@ -133,7 +133,7 @@ async function testDeployedContracts() {
     
     // Add an application
     console.log('📱 Adding application...');
-    const tx3 = await missionContract.addApplicationToMission(
+    const tx3 = await missionManager.addApplicationToMission(
         missionId,
         "Test App",
         "A test application",
@@ -148,7 +148,7 @@ async function testDeployedContracts() {
     
     // Add an interaction
     console.log('⚡ Adding interaction...');
-    const tx4 = await missionContract.addInteractionToMission(
+    const tx4 = await missionManager.addInteractionToMission(
         missionId,
         1, // application ID
         "Test Interaction",
@@ -165,7 +165,7 @@ async function testDeployedContracts() {
     console.log('\\n✅ All tests completed successfully!');
     console.log('\\n📊 Summary:');
     console.log('- Factory missions created:', newMissionCount.toString());
-    console.log('- MissionContract missions:', (await missionContract.getTotalMissions()).toString());
+    console.log('- MissionManager missions:', (await missionManager.getTotalMissions()).toString());
     console.log('- Applications added:', appCount.toString());
     console.log('- Interactions added:', interactionCount.toString());
 }
@@ -197,6 +197,6 @@ echo ""
 echo "📊 Test Results Summary:"
 echo "✅ Contract deployment verification"
 echo "✅ Factory mission creation"
-echo "✅ MissionContract mission creation"
+echo "✅ MissionManager mission creation"
 echo "✅ Application and interaction management"
 echo "✅ Contract interaction testing"
