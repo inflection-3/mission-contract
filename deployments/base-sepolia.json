@@ -1,0 +1,17 @@
+{
+  "network": "base-sepolia",
+  "rpcUrl": "https://sepolia.base.org",
+  "explorerUrl": "https://sepolia.basescan.org",
+  "usdcAddress": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+  "deployments": {
+    "MissionFactory": {
+      "address": "null",
+      "explorerUrl": "https://sepolia.basescan.org/address/null"
+    },
+    "MissionContract": {
+      "address": "",
+      "explorerUrl": "https://sepolia.basescan.org/address/"
+    }
+  },
+  "deployedAt": "2025-09-22T20:06:38Z"
+}

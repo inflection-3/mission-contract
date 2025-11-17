@@ -1,0 +1,37 @@
+{
+  "network": "monad-testnet",
+  "rpcUrl": "https://rpc.ankr.com/monad_testnet",
+  "explorerUrl": "https://testnet-explorer.monad.xyz",
+  "usdcAddress": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+  "deployments": {
+    "IdentityLayer": {
+      "address": "",
+      "explorerUrl": "https://testnet-explorer.monad.xyz/address/"
+    },
+    "INXRewardManager": {
+      "address": "0x391C55685c592bC6dDFF178B1D2ae19E903B37eF",
+      "explorerUrl": "https://testnet-explorer.monad.xyz/address/0x391C55685c592bC6dDFF178B1D2ae19E903B37eF"
+    },
+    "StablecoinSettlement": {
+      "address": "",
+      "explorerUrl": "https://testnet-explorer.monad.xyz/address/"
+    },
+    "MinerIncentive": {
+      "address": "",
+      "explorerUrl": "https://testnet-explorer.monad.xyz/address/"
+    },
+    "MissionImplementation": {
+      "address": "",
+      "explorerUrl": "https://testnet-explorer.monad.xyz/address/"
+    },
+    "MissionFactory": {
+      "address": "",
+      "explorerUrl": "https://testnet-explorer.monad.xyz/address/"
+    },
+    "MissionManager": {
+      "address": "",
+      "explorerUrl": "https://testnet-explorer.monad.xyz/address/"
+    }
+  },
+  "deployedAt": "2025-11-17T16:28:10Z"
+}
